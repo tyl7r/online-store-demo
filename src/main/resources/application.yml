@@ -13,3 +13,5 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+secrets:
+  SECRET_KEY: "452948404D635166546A576E5A7234753778214125442A462D4A614E64526755"
