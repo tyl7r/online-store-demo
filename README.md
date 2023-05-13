@@ -4,7 +4,7 @@ The data structure is as below where shopping_cart and order are both
 join tables where the User can have a single "shopping cart" and a table of orders
 so both JoinTables will have full access to the related User / Product object.
 
-![](data structure.png)
+![](data%20structure.png)
 
 DBML:
 Table user {
