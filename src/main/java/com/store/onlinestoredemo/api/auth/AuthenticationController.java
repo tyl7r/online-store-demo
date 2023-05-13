@@ -1,6 +1,5 @@
-package com.store.onlinestoredemo.auth;
+package com.store.onlinestoredemo.api.auth;
 
-import com.store.onlinestoredemo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

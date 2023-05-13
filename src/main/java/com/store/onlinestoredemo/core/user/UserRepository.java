@@ -1,4 +1,4 @@
-package com.store.onlinestoredemo.user;
+package com.store.onlinestoredemo.core.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

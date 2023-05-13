@@ -1,4 +1,4 @@
-package com.store.onlinestoredemo.auth;
+package com.store.onlinestoredemo.api.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.store.onlinestoredemo.config;
 
-import com.store.onlinestoredemo.user.UserRepository;
+import com.store.onlinestoredemo.core.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

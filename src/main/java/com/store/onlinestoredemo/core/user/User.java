@@ -1,4 +1,4 @@
-package com.store.onlinestoredemo.user;
+package com.store.onlinestoredemo.core.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,24 +16,28 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "user_table")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private List<OrderHistory> orderHistory;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
