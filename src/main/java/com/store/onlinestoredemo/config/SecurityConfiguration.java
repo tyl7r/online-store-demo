@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/account/**").hasRole("ADMIN") //deleteAccountById Admin
                 .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateInfo/**").hasRole("ADMIN") //updateById Admin
+                .requestMatchers(HttpMethod.GET, "/api/v1/account").authenticated() // retrieveUserDetails User
                 .requestMatchers(HttpMethod.GET, "/api/v1/account/**").hasAnyRole("BUSINESS", "ADMIN") // retrieveUserDetails Business
                 .requestMatchers(HttpMethod.GET, "/api/v1/account/getOrderHistory/**").hasAnyRole("BUSINESS", "ADMIN") // retrieveUserOrders Business
                 .requestMatchers("/api/v1/product/**")
