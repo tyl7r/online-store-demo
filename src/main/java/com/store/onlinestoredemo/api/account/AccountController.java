@@ -3,10 +3,7 @@ package com.store.onlinestoredemo.api.account;
 import com.store.onlinestoredemo.application.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,30 +17,40 @@ public class AccountController {
         return ResponseEntity.ok(service.retrieveUserDetails());
     }
 
-    @PutMapping("updateInfo")
-    public ResponseEntity<AccountResponse> updateUserDetails() {
-        return ResponseEntity.ok(service.updateUserDetails());
+    @GetMapping("/{userId}")
+    public ResponseEntity<AccountResponse> adminRetrieveUserDetails(@PathVariable Integer userId) {
+        return ResponseEntity.ok(service.adminRetrieveUserDetails(userId));
     }
 
+    @GetMapping("/getOrderHistory")
+    public ResponseEntity<String> retrieveUserOrderHistory() {
+        return ResponseEntity.ok(service.retrieveUserOrderHistory(null));
+    }
 
+    @GetMapping("/getUserOrderHistory/{userId}")
+    public ResponseEntity<String> retrieveUserOrderHistory(@PathVariable Integer userId) {
+        return ResponseEntity.ok(service.retrieveUserOrderHistory(userId));
+    }
 
+    @PutMapping("/updateInfo")
+    public ResponseEntity<AccountResponse> updateUserDetails(@RequestBody AccountRequest request) {
+        return ResponseEntity.ok(service.updateUserDetails(request, false));
+    }
+
+    @PutMapping("/updateUserInfo")
+    public ResponseEntity<AccountResponse> adminUpdateUserDetails(@RequestBody AccountRequest request) {
+        return ResponseEntity.ok(service.updateUserDetails(request, true));
+    }
+
+    @DeleteMapping("/{userId}")
+    public void deleteUserDetails(@PathVariable int userId) {
+        service.deleteUserDetails(userId);
+    }
 
 }
 /*
 
-USER:
 /accounts/*
-GET /accounts - Returns User Details
-PUT /accounts/updateInfo (UserRequest) - Updates User details
-
-
-BUSINESS:
-/accounts/*
-GET /accounts?accountId={id} - Get Account Info by Id
 GET /accounts/getOrderHistory={id} - Get Order History by Id
 ----------------------------------------
-Admin Account:
-/accounts/*
-DEL /accounts?accountId={id} - Delete Account by Id
-PUT /accounts/updateInfo?accountId=123 (UserRequest) - Updates a users details
  */

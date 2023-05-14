@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    Optional<List<Order>> findOrderHistoryByUserId(String userId);
+    Optional<List<Order>> findOrdersByUserId(Integer userId);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -19,18 +20,22 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/account/**").hasRole("ADMIN") //deleteAccountById Admin
-                .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateInfo/**").hasRole("ADMIN") //updateById Admin
-                .requestMatchers(HttpMethod.GET, "/api/v1/account").authenticated() // retrieveUserDetails User
-                .requestMatchers(HttpMethod.GET, "/api/v1/account/**").hasAnyRole("BUSINESS", "ADMIN") // retrieveUserDetails Business
-                .requestMatchers(HttpMethod.GET, "/api/v1/account/getOrderHistory/**").hasAnyRole("BUSINESS", "ADMIN") // retrieveUserOrders Business
+                // ACCOUNTS Endpoints
+                .requestMatchers(HttpMethod.GET, "/api/v1/account").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/v1/account/getOrderHistory").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateInfo").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/v1/account/getUserOrderHistory/{userId}").hasAnyRole("BUSINESS", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/v1/account/{userId}").hasAnyRole("BUSINESS", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/account/{userId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateUserInfo").hasRole("ADMIN")
+
+
                 .requestMatchers("/api/v1/product/**")
                 .hasAnyRole("BUSINESS", "ADMIN")
                 .requestMatchers("/api/v1/auth/**")
@@ -44,5 +49,10 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    public AntPathMatcher antPathMatcher() {
+        return new AntPathMatcher();
     }
 }

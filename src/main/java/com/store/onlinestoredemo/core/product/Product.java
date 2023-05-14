@@ -35,4 +35,19 @@ public class Product {
     @Column(nullable = false)
     private Double rating;
 
+    public String toString() {
+        return String.format("%s - %s - $%.2f\n%s\nRated %d stars",
+                getCategory(), getProductName(), getPrice(),
+                getDescription(), getRating());
+    }
+
+    /*
+
+Drinks - Coca Cola Zero - $1.49
+A nice cold beverage
+Rated 4.5 stars
+
+
+     */
+
 }
