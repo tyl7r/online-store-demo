@@ -19,6 +19,8 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private static final String ROLE_ADMIN = "ADMIN";
+    private static final String ROLE_BUSINESS = "BUSINESS";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -30,14 +32,15 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/api/v1/account").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/v1/account/getOrderHistory").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateInfo").authenticated()
-                .requestMatchers(HttpMethod.GET, "/api/v1/account/getUserOrderHistory/{userId}").hasAnyRole("BUSINESS", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/v1/account/{userId}").hasAnyRole("BUSINESS", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/account/{userId}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateUserInfo").hasRole("ADMIN")
-
-
-                .requestMatchers("/api/v1/product/**")
-                .hasAnyRole("BUSINESS", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/v1/account/getUserOrderHistory/{userId}").hasAnyRole(ROLE_BUSINESS, ROLE_ADMIN)
+                .requestMatchers(HttpMethod.GET, "/api/v1/account/{userId}").hasAnyRole(ROLE_BUSINESS, ROLE_ADMIN)
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/account/{userId}").hasRole(ROLE_ADMIN)
+                .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateUserInfo").hasRole(ROLE_ADMIN)
+                //STORE
+                .requestMatchers("/api/v1/store/**").authenticated()
+                // PRODUCTS
+                .requestMatchers("/api/v1/product/**").hasAnyRole(ROLE_BUSINESS, ROLE_ADMIN)
+                // AUTH
                 .requestMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest()
@@ -51,8 +54,8 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    public AntPathMatcher antPathMatcher() {
-        return new AntPathMatcher();
-    }
+//    @Bean
+//    public AntPathMatcher antPathMatcher() {
+//        return new AntPathMatcher();
+//    }
 }
