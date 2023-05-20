@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private LocalDateTime purchaseDate;
@@ -29,4 +30,10 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // Lombok should be creating this but the code wouldn't compile without
+    public Order(LocalDateTime purchaseDate, Product product, User user) {
+        this.purchaseDate = purchaseDate;
+        this.product = product;
+        this.user = user;
+    }
 }
