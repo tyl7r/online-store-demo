@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -20,13 +18,14 @@ public class ProductService {
         return productRepository.save(mapRequestToProduct(request));
     }
 
-    public void updateProductDetails(ProductRequest request) {
+    public Product updateProductDetails(ProductRequest request) {
         Product oldProduct = productRepository.findByProductName(request.getProductName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
         Product newProduct = mapRequestToProduct(request);
         newProduct.setId(oldProduct.getId());
         newProduct.setRating(oldProduct.getRating());
         productRepository.save(newProduct);
+        return newProduct;
     }
 
     public void deleteProductDetails(int productId) {

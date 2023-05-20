@@ -27,9 +27,4 @@ public class ShoppingCart {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-    public ShoppingCart(User user, Product product) {
-        this.user = user;
-        this.product = product;
-    }
 }

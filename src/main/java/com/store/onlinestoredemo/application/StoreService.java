@@ -30,8 +30,8 @@ public class StoreService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
-
     //GET /store/search?name="Banana"&category="Food"&priceRange="0-50"&sortBy="Name/Price/Rating"
+    // All the parameters are optional and code checks one by one and performs logic accordingly
     public List<Product> search(String name, String category, String priceRange, String sortBy) {
         List<Product> products = new ArrayList<>();
         if (name != null) {
@@ -51,6 +51,7 @@ public class StoreService {
                     .orElseThrow());
         }
 
+        // Uses smart Comparator and lambda function to go through each Product via X or Y
         if (sortBy != null) {
             switch (sortBy) {
                 case "Name", "name":
@@ -73,7 +74,6 @@ public class StoreService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
         User user = getAuthenticatedUser();
-//        ShoppingCart cartItem = new ShoppingCart(user, product);
         var cartItem = ShoppingCart.builder()
                 .user(user)
                 .product(product)
@@ -88,7 +88,6 @@ public class StoreService {
     }
 
     // Get authenticated user -> get id -> search for rows in cart for user_id
-
     // Loop through cart -> save order to repository -> delete cart and send response
     @Transactional
     public List<Order> processOrder() {
@@ -103,9 +102,8 @@ public class StoreService {
             for (ShoppingCart cart : shoppingCart) {
                 order = new Order(LocalDateTime.now(), cart.getProduct(), user);
                 orders.add(order);
-                orderRepository.save(order);
             }
-
+            orderRepository.saveAll(orders);
             cartRepository.deleteByUserId(user.getId());
             return orders;
         }

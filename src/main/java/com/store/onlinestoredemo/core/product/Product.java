@@ -35,7 +35,8 @@ public class Product {
     @Column(nullable = false)
     private Double rating;
 
-    /*
+    /*  ## Nice client response, removed due to breaking code and unused. ##
+
     public String toString() {
         return String.format("%s - %s - $%.2f\n%s\nRated %d stars",
                 getCategory(), getProductName(), getPrice(),

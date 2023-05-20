@@ -24,8 +24,4 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-    @PostMapping("/test")
-    public void test() {
-        service.test();
-    }
 }

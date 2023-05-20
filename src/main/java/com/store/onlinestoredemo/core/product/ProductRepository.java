@@ -16,7 +16,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Optional<List<Product>> findByPriceBetween(BigDecimal minimum, BigDecimal maximum);
 
-    boolean existsByProductName(String productName);
-
     boolean existsById(Integer id);
 }

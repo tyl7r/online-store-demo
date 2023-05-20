@@ -48,9 +48,3 @@ public class AccountController {
     }
 
 }
-/*
-
-/accounts/*
-GET /accounts/getOrderHistory={id} - Get Order History by Id
-----------------------------------------
- */

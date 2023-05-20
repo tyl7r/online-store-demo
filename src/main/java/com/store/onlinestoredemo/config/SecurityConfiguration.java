@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +27,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                // ACCOUNTS Endpoints
+                // ACCOUNTS Endpoints (below should use Lambda format)
                 .requestMatchers(HttpMethod.GET, "/api/v1/account").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/v1/account/getOrderHistory").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/v1/account/updateInfo").authenticated()
@@ -53,9 +52,4 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-//    @Bean
-//    public AntPathMatcher antPathMatcher() {
-//        return new AntPathMatcher();
-//    }
 }

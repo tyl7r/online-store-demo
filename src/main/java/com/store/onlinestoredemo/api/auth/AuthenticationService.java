@@ -49,15 +49,4 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
-
-    public void test() {
-        var user = User.builder()
-                .firstName("Tyler")
-                .lastName("Cherry")
-                .email("tyler@tyler.com")
-                .password(passwordEncoder.encode("poop"))
-                .role(Role.ROLE_USER)
-                .build();
-        repository.save(user);
-    }
 }

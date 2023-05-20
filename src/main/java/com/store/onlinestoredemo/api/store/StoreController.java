@@ -26,7 +26,7 @@ public class StoreController {
         return ResponseEntity.ok(service.search(name, category, priceRange, sortBy));
     }
 
-    //todo Should really map ShoppingCart to a client response as returning full User is inappropriate
+    //todo Global - Map responses for client - client should not see User info / IDs
     @PostMapping("/cart/{productId}")
     public ResponseEntity<ShoppingCart> addToCart(@PathVariable Integer productId) {
         return ResponseEntity.ok(service.addToCart(productId));
